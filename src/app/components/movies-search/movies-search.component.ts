@@ -3,6 +3,7 @@ import { MoviesDataService } from '../../services/movies-data.service';
 
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 const regexTitle = "[A-Za-z0-9 \-]*";
 
@@ -28,6 +29,9 @@ export class MoviesSearchComponent implements OnInit {
   constructor(private _moviesDataService: MoviesDataService) { }
 
   ngOnInit() {
+    this.searchForm.valueChanges.pipe(debounceTime(1000)).subscribe(_ => {
+      if(this.searchForm.valid) this.search();
+    });
   }
 
   search() {
