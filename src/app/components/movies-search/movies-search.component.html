@@ -1,31 +1,55 @@
 <div class="searchPanel">
-    <mat-form-field>
-        <mat-label>Title</mat-label>
-        <input matInput name="title" type=text [(ngModel)]="_moviesDataService.searchParams.title"/>
+    <form [formGroup]="searchForm" (ngSubmit)="search()" >
+        <mat-form-field>
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" type=text [(ngModel)]="_moviesDataService.searchParams.title"/>
+            <button 
+            mat-button 
+            autocomplete="off"
+            *ngIf="_moviesDataService.searchParams.title" 
+            matSuffix mat-icon-button aria-label="Clear" 
+            (click)="_moviesDataService.searchParams.title=''">
+                <mat-icon>close</mat-icon>
+            </button>
+            <mat-error *ngIf="title.hasError('pattern') && !title.hasError('required')">
+                Special characters not allowed.
+            </mat-error>
+            <mat-error *ngIf="title.hasError('required')">
+                This field is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Year</mat-label>
+            <input 
+            matInput 
+            autocomplete="off"
+            formControlName="year" 
+            type="number"
+            min=1900
+            max=2030
+            [(ngModel)]="_moviesDataService.searchParams.year"/>
+            <mat-error *ngIf="year.hasError('min')">
+                Minimum allowed year is 1900.
+            </mat-error>
+            <mat-error *ngIf="year.hasError('max')">
+                Maximum allowed year is 2030.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type" placeholder="Select" [(ngModel)]="_moviesDataService.searchParams.type">
+                <mat-option 
+                *ngFor="let movieType of movieTypes" value={{movieType}}>{{movieType}}</mat-option>
+            </mat-select>
+        </mat-form-field>
         <button 
-        mat-button 
-        *ngIf="_moviesDataService.searchParams.title" 
-        matSuffix mat-icon-button aria-label="Clear" 
-        (click)="_moviesDataService.searchParams.title=''">
-            <mat-icon>close</mat-icon>
+        class="searchButton" 
+        type="submit"
+        [disabled]="_moviesDataService.loading || !searchForm.valid"
+        mat-raised-button color="primary">
+            Search
         </button>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Year</mat-label>
-        <input matInput name="year" maxlength="4" type=text [(ngModel)]="_moviesDataService.searchParams.year"/>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Type</mat-label>
-        <mat-select placeholder="Select" [(ngModel)]="_moviesDataService.searchParams.type">
-            <mat-option 
-            *ngFor="let movieType of movieTypes"value={{movieType}}>{{movieType}}</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <button 
-    class="searchButton" 
-    (click)="search()" 
-    [disabled]="_moviesDataService.loading"
-    mat-raised-button color="primary">Search</button>
+    </form>
     <mat-progress-bar 
         *ngIf="_moviesDataService.loading"
         class="progressBar"
