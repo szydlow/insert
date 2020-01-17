@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+    line-height: 150%;
+}
+html, body { 
+    height: 100%; 
+}
+html { 
+    font-size: 62.5%; 
+    box-sizing: border-box;
+
+    @media (max-width: 900px) {
+        font-size: 45%;
+    }
+    @media (max-width: 600px) {
+        font-size: 32%;
+    }
+}
+body { 
+    font-size: 1.6rem;
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+}

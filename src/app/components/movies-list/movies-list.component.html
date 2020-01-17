@@ -1,0 +1,9 @@
+<cdk-virtual-scroll-viewport itemSize=250 (scrolledIndexChange)="_handleScrolledIndexChange($event)">
+    <div class="movieItem animated fadeIn" *cdkVirtualFor="let movie of moviesData">
+        <img src={{movie.Poster}}>
+        <div class="movieDescription">
+            <p class="movieDescription__title">{{movie.Title}}</p>
+            <p class="movieDescription__year">{{movie.Year}}</p>
+        </div>
+    </div>
+</cdk-virtual-scroll-viewport>

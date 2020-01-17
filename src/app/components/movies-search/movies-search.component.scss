@@ -1,0 +1,13 @@
+.searchPanel {
+    height: 15vh;
+    margin: 0 2rem;
+
+    mat-form-field {
+        margin: 1rem;
+    }
+
+    .searchButton {
+        margin-left: 2rem;
+        width: 15rem;
+    }
+}

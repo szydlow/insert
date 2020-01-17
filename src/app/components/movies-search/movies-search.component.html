@@ -1,0 +1,35 @@
+<div class="searchPanel">
+    <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput name="title" type=text [(ngModel)]="_moviesDataService.searchParams.title"/>
+        <button 
+        mat-button 
+        *ngIf="_moviesDataService.searchParams.title" 
+        matSuffix mat-icon-button aria-label="Clear" 
+        (click)="_moviesDataService.searchParams.title=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Year</mat-label>
+        <input matInput name="year" maxlength="4" type=text [(ngModel)]="_moviesDataService.searchParams.year"/>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select placeholder="Select" [(ngModel)]="_moviesDataService.searchParams.type">
+            <mat-option 
+            *ngFor="let movieType of movieTypes"value={{movieType}}>{{movieType}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button 
+    class="searchButton" 
+    (click)="search()" 
+    [disabled]="_moviesDataService.loading"
+    mat-raised-button color="primary">Search</button>
+    <mat-progress-bar 
+        *ngIf="_moviesDataService.loading"
+        class="progressBar"
+        color="primary"
+        mode="indeterminate">
+    </mat-progress-bar>
+</div>
