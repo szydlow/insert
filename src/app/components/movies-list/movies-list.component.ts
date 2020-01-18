@@ -6,6 +6,8 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageBarComponent } from '../message-bar/message-bar.component';
 
+const PAGE_SIZE = 10;
+
 @Component({
   selector: 'app-movies-list',
   templateUrl: './movies-list.component.html',
@@ -17,6 +19,7 @@ export class MoviesListComponent implements OnInit, OnDestroy {
 
   moviesData: SearchItemModel[] = [];
   dataLength: number = 0;
+  actualSearchTitle: string;
 
   constructor(
     private _moviesDataService: MoviesDataService, 
@@ -47,9 +50,10 @@ export class MoviesListComponent implements OnInit, OnDestroy {
   }
 
   private _updateMovieData(data: SearchResultModel) {
-    if (this._moviesDataService.searchParams.page === 1) {
+    if (this._moviesDataService.searchParams.nextPage === 2) {
       this.moviesData = data.Search;
       this.viewport.scrollToIndex(0);
+      this.actualSearchTitle = this._moviesDataService.searchParams.title;
     } else {
       this.moviesData = [...this.moviesData, ...data.Search];
     }
@@ -58,14 +62,23 @@ export class MoviesListComponent implements OnInit, OnDestroy {
 
   private _handleScrolledIndexChange() {
     if (this._isAllDataFetched()) return;
+    if (!this._isValidTitle()) return;
+    if (!this._isValidPage()) return;
     if (this.viewport.getDataLength() === this.viewport.getRenderedRange().end) {
       this._moviesDataService.fetchNextPage();
     }
   }
 
   private _isAllDataFetched() {
-    console.log(this.viewport.getDataLength(), this.dataLength)
     return this.viewport.getDataLength() === this.dataLength;
+  }
+
+  private _isValidTitle() {
+    return this._moviesDataService.searchParams.title === this.actualSearchTitle;
+  }
+
+  private _isValidPage() {
+    return this._moviesDataService.searchParams.nextPage === Math.floor(this.viewport.getDataLength() / PAGE_SIZE) + 1;
   }
 
 }

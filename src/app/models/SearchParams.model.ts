@@ -3,5 +3,5 @@ export interface SearchParamsModel {
     title: string;
     type: string;
     year: number;
-    page: number;
+    nextPage: number;
 }

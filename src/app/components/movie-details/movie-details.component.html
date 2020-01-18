@@ -1,0 +1,29 @@
+<div class="movieDetails">
+    <div class="moviePoster">
+        <img src={{movieData.Poster}}>
+    </div>
+    <div class="movieDescription">
+        <div>
+            <p class="movieDescription__title">{{movieData.Title}}</p>
+            <p class="movieDescription__year">{{movieData.Year}}</p>
+        </div>
+        <div *ngIf="!(details$ | async)" class="movieDescription__plot">
+            <mat-spinner diameter=45></mat-spinner>
+        </div>
+        <div *ngIf="(details$ | async) as details">
+            <div class="movieDescription__genre">Genre: {{details.Genre}}</div>
+            <div class="movieDescription__plot">{{details.Plot}}</div>
+            <div class="movieDescription__ratings">
+                <div *ngFor="let rating of details.Ratings">
+                    {{rating.Source}}: {{rating.Value}}
+                    <ng-template #t let-fill="fill">
+                        <span class="star" [class.full]="fill === 100">
+                            <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
+                        </span>
+                    </ng-template>
+                    <ngb-rating [rate]="parseRatingValue(rating.Value)" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

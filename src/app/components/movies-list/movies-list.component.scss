@@ -1,24 +1,15 @@
 cdk-virtual-scroll-viewport {
     height: 85vh;
 
+    @media (max-width: 600px) {
+        height: 82vh;
+    }
+
     .movieItem {
         background-color: #f7f4f4;
         height: 250px;
         margin: 2rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
         border-radius: 6px;
-
-        img {
-            height: 20rem;
-            margin: 2.5rem
-        }
-
-        .movieDescription {
-            &__title {
-                font-weight: 600;
-            }
-        }
+        position: relative;
     }
 }

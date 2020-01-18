@@ -1,0 +1,68 @@
+.movieDetails {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &:hover img {
+        transform: scale(1.1);
+    }
+    
+    .moviePoster {
+        height: 20rem;
+        margin: 2.5rem;
+        overflow: hidden;
+        
+        img {
+            height: 100%;
+            transition: all 0.5s;
+        }
+
+    }
+
+    .movieDescription {
+        width: 50%;
+        height: 180px;
+        padding: 10px;
+
+        &__title {
+            font-weight: 600;
+        }
+
+        &__genre {
+            color: #666;
+        }
+
+        &__plot {
+            font-style: italic;
+        }
+
+        &__ratings {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #f3e6e0;
+            border-radius: 25px;
+
+            div {
+                display: inline-block;
+                margin: 0 10px;
+            }
+
+            .star {
+                position: relative;
+                display: inline-block;
+                font-size: 2rem;
+                color: #d3d3d3;
+            }
+            .full {
+                color: red;
+            }
+            .half {
+                position: absolute;
+                display: inline-block;
+                overflow: hidden;
+                color: red;
+            }
+        }
+    }
+}

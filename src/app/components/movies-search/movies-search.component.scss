@@ -1,13 +1,16 @@
 .searchPanel {
     height: 15vh;
-    margin: 0 2rem;
+    margin: 1rem 2rem 0;
+
+    @media (max-width: 600px) {
+        height: 18vh;
+    }
 
     mat-form-field {
         margin: 1rem;
-    }
 
-    .searchButton {
-        margin-left: 2rem;
-        width: 15rem;
+        @media (max-width: 600px) {
+            margin: 0;
+        }
     }
 }
